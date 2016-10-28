@@ -1,0 +1,42 @@
+<div class="full" id='map'></div>
+
+<script>
+  L.mapbox.accessToken = 'pk.eyJ1IjoicGEzayIsImEiOiJjaXR4ZzVuNnkwMDQ1MnNuMjQzZXh2N2w2In0.dju67E08KTofwOCQqYKPbA';
+
+  var current_location_icon = L.mapbox.marker.icon({
+    'marker-size': 'large',
+    'marker-symbol': 'embassy',
+    'marker-color': '#fa0'
+  });
+
+  var lat = 48.21254876091117;
+  var lng = 16.370111703872677;
+
+  var map = L.mapbox.map('map')
+      .setView([lat, lng], 8);
+
+  var styleLayer = L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v9')
+      .addTo(map);
+
+  var gjsonLayer = L.mapbox.featureLayer().addTo(map);
+
+  var my_position = L.marker([lat,lng], {
+    icon: current_location_icon
+  }).addTo(map);
+
+  map.on('click', function(e) {
+    map.removeLayer(my_position);
+    $(".aposition").html("Actual position: " + e.latlng);
+    lat = e.latlng.lat;
+    lng = e.latlng.lng;
+    my_position = L.marker([e.latlng.lat, e.latlng.lng], {
+      icon: current_location_icon
+    }).addTo(map);
+  });
+
+  $(".btn").click(function(event) {
+    event.preventDefault();
+    gjsonLayer.loadURL('/map/close_place?distance='+ $("#range_value").val() + '&lat=' + lat + '&lng=' + lng);
+  });
+
+</script>

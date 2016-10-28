@@ -1,0 +1,62 @@
+<h1>PDT project</h1>
+
+<p class="aposition"></p>
+
+<hr />
+
+<div class="left_section">
+  <h2>Find sports to distance:</h2>
+
+    <%= hidden_field_tag :range_value, 2500 %>
+
+    <input type="range" min="0" max="5000" step="100">
+    <h2 class="output_range">2500 m</h2>
+
+    <%= link_to '', class: "btn btn--s"  do %>
+        <span><i class="fa fa-search" aria-hidden="true"></i> Find</span>
+    <% end %>
+</div>
+
+<hr />
+
+<div class="left_section">
+  <h2>Find sports by type:</h2>
+
+  <div class="ui-widget">
+    <input id="tags">
+  </div>
+
+  <a href="#" class="btn btn--s">
+    <span><i class="fa fa-search" aria-hidden="true"></i> Find</span>
+  </a>
+</div>
+
+<hr />
+
+<script>
+
+  $(function() {
+
+    $('input[type=range]').rangeslider({
+      polyfill: false
+    });
+
+    $(document).on('input', 'input[type="range"]', function(e) {
+      $(".output_range").html(e.currentTarget.value + " m");
+      $("#range_value").val(e.currentTarget.value)
+    });
+
+///////////////////////////////////////////////////
+// jQuery autocomplete
+// /////////////////////////////////////////
+
+    $.getJSON('map/sports_list', function(data) {
+      $( "#tags" ).autocomplete({
+        source: data
+      });
+    });
+
+
+  });
+
+</script>

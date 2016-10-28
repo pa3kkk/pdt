@@ -1,0 +1,6 @@
+development:
+  PG_USER: postgres
+  PG_PASSWORD: facebruk132
+production:
+  GMAIL_USERNAME: myemail@mydomain.com
+  GMAIL_PASSWORD: myproductionpassword123
