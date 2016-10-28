@@ -34,9 +34,14 @@
     }).addTo(map);
   });
 
-  $(".btn").click(function(event) {
+  $("#find_distance").click(function(event) {
     event.preventDefault();
     gjsonLayer.loadURL('/map/close_place?distance='+ $("#range_value").val() + '&lat=' + lat + '&lng=' + lng);
+  });
+
+  $("#find_sports").click(function(event) {
+    event.preventDefault();
+    gjsonLayer.loadURL('/map/one_sport?sport='+ $("#sports").val());
   });
 
 </script>

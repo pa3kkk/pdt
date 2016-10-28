@@ -2,16 +2,8 @@ class PlanetOsmPoint < ApplicationRecord
 
   self.table_name = 'planet_osm_point'
 
-  def self.get_sport
-    result = self.select('name, st_asText(st_transform(way, 4326))').where('sport = ?',"ballet").first
-    p result.name
-    p result.st_astext
-  end
-
-  def self.closes_sport(dist,lat,lng)
-    p dist + " => this is distance"
-
-    result = ActiveRecord::Base.connection.execute("
+  def self.get_by_distance(dist,lat,lng)
+    results = ActiveRecord::Base.connection.execute("
       SELECT sport, name, st_x(st_transform(way, 4326)) as lng, st_y(st_transform(way, 4326)) as ltd
       FROM planet_osm_point
       WHERE ST_Distance(
@@ -20,39 +12,51 @@ class PlanetOsmPoint < ApplicationRecord
         ) < #{dist} AND sport IS NOT NULL
     ")
 
-    p result.count
     @geojson = []
 
-    result.each do |point|
-      # p point
+    results.each do |result|
       @geojson.push({
           type: 'Feature',
           geometry: {
               type: 'Point',
-              coordinates: [point["lng"], point["ltd"]]
+              coordinates: [result["lng"], result["ltd"]]
           },
           properties: {
+              'title': result["sport"],
               'marker-color': '#3ca0d3',
               'marker-size': 'large',
               'marker-symbol': 'rocket'
           }
       })
     end
-
-    p @geojson
-    return @geojson
-
+    @geojson
   end
 
-  def self.search_sport(term)
-    results = self.select(:sport).where('sport ILIKE ?', "%#{term}%").group(:sport)
-    p results[0].sport
-    @json = []
+  def self.get_by_sport(sport)
+    results = ActiveRecord::Base.connection.execute("
+      SELECT sport, name, st_x(st_transform(way, 4326)) as lng, st_y(st_transform(way, 4326)) as ltd
+      FROM planet_osm_point
+      WHERE sport = '#{sport}'
+    ")
+
+    @geojson = []
+
     results.each do |result|
-        @json.push({
-            sport: result.sport
-                   })
+      @geojson.push({
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [result["lng"], result["ltd"]]
+                        },
+                        properties: {
+                            title: result["name"],
+                            'marker-color': '#29ef17',
+                            'marker-size': 'large',
+                            'marker-symbol': 'soccer'
+                        }
+                    })
     end
+    @geojson
   end
 
   def self.get_sports
