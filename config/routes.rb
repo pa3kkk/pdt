@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   get 'map/close_place'
   get 'map/sports_list'
   get 'map/one_sport'
+
+  get 'map/new'
+  post 'map/save'
 end

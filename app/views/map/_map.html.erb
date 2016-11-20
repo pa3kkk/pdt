@@ -44,4 +44,9 @@
     gjsonLayer.loadURL('/map/one_sport?sport='+ $("#sports").val());
   });
 
+  $("#new_sport").click(function(event) {
+    event.preventDefault();
+    location.href = 'map/new?lat=' + lat + '&lng=' + lng;
+  });
+
 </script>

@@ -67,5 +67,21 @@ class PlanetOsmPoint < ApplicationRecord
     end
     sports
   end
+
+  def self.save_sport(name, sport, lng, ltd)
+
+    # convert EPSG:4326 to EPSG:900913
+    # x = lng.to_f * 20037508.34 / 180
+    x = (lng.to_f * Math::PI / 180) * 6378137
+    # y = Math.log(Math.tan((90 + ltd.to_f) * Math::PI / 360)) / (Math::PI / 180)*111319.490778
+    # y = 180.0/Math::PI * Math.log(Math.tan(Math::PI / 4.0 + ltd.to_f * ( Math::PI / 180.0 ) / 2.0))
+    y = Math.log(Math.tan(Math::PI / 4 + (ltd.to_f * Math::PI / 180) / 2)) * 6378137;
+
+    result = ActiveRecord::Base.connection.execute("
+      INSERT INTO planet_osm_point(name, sport, way)
+      VALUES('#{name}','#{sport}', ST_PointFromText('POINT(#{y} #{x})', 900913));
+    ")
+  end
+
 end
 

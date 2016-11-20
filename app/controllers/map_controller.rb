@@ -15,4 +15,18 @@ class MapController < ApplicationController
     render json: PlanetOsmPoint.get_by_sport(params[:sport])
   end
 
+  def save
+    PlanetOsmPoint.save_sport(params[:name], params[:sport], params[:lat], params[:lng])
+    p params[:name]
+    p params[:sport]
+    p params[:lat]
+    p params[:lng]
+    redirect_to root_path
+  end
+
+  def new
+    @lat = params[:lat]
+    @lng = params[:lng]
+  end
+
 end

@@ -1,0 +1,24 @@
+<div class="center">
+  <h1>Save new sport</h1>
+
+  <%= form_tag map_save_path do %>
+      <div>
+        <label for="name">Name</label>
+        <%= text_field_tag :name ,'', required: true %>
+      </div>
+      <div>
+        <label for="sport">Sport</label>
+        <%= text_field_tag :sport, '', required: true %>
+      </div>
+      <div>
+        <label for="lng">Lng</label>
+        <%= number_field_tag :lng, value = @lng, required: true %>
+      </div>
+      <div>
+        <label for="lat">Lat</label>
+        <%= number_field_tag :lat, value = @lat, required: true %>
+      </div>
+      <%= submit_tag "Save" %>
+  <% end %>
+
+</div>
