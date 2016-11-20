@@ -75,7 +75,8 @@ class PlanetOsmPoint < ApplicationRecord
     x = (lng.to_f * Math::PI / 180) * 6378137
     # y = Math.log(Math.tan((90 + ltd.to_f) * Math::PI / 360)) / (Math::PI / 180)*111319.490778
     # y = 180.0/Math::PI * Math.log(Math.tan(Math::PI / 4.0 + ltd.to_f * ( Math::PI / 180.0 ) / 2.0))
-    y = Math.log(Math.tan(Math::PI / 4 + (ltd.to_f * Math::PI / 180) / 2)) * 6378137;
+    y = Math.log(Math.tan(Math::PI / 4 + (ltd.to_f * Math::PI / 180) / 2)) * 6378137
+    # y = Math.log(Math.tan((ltd.to_f / 90) * (Math::PI / 4) )) * (180 / Math::PI)
 
     result = ActiveRecord::Base.connection.execute("
       INSERT INTO planet_osm_point(name, sport, way)
