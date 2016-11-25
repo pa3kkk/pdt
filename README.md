@@ -10,7 +10,8 @@ Rails je štandardný MVC framework a z toho vyplýva, že pripojenie k databáz
 ##### Funkcie:
 + Nájdenie športovísk do určitej vzdialenosti od požadovaného miesta.
 + Zobrazenie športovísk od typu športoviska.
-+ Vytvorenie nového športoviska na mape. (Pre uloženie do DB je potrebný prevod z lng/ltd čiže z EPSG:4326 do standardu EPSG:900913. Pri prevode som použil [tieto](https://gist.github.com/springmeyer/871897) vzorce, ktoré je možné nájsť vo viacerých zdrojoch. Pri prevode vniká istá odchýľka ktorú sa mi nepodarilo odstrániť.)
++ Automatické dopĺňanie textu pri hľadaní typu športoviska (dopyt nad existujúcimi športoviskami v DB).
++ Vytvorenie nového športoviska na mape. (Pre uloženie do DB je potrebný prevod z lng/ltd čiže z EPSG:4326 do štandardu EPSG:900913. Pri prevode som použil [tieto](https://gist.github.com/springmeyer/871897) vzorce, ktoré je možné nájsť vo viacerých zdrojoch. Pri prevode vzniká istá odchýľka ktorú sa mi nepodarilo odstrániť.)
 
 ![alt text](vendor/assets/images/map_screen.png "Logo Title Text 1")
 
